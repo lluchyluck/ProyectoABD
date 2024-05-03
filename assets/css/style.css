@@ -2,7 +2,7 @@
 body {
   font-family: 'Arial', sans-serif;
   margin: 0;
-  background-color: #f2f5f8; /* Light gray background */
+  background-color: #303d49; /* Light gray background */
   color: #333; /* Dark gray text for readability */
 }
 
@@ -20,12 +20,12 @@ header {
 /* Alternatively, use a gradient background */
 header {
   /* Remove background-image properties above */
-  background: linear-gradient(to right, #2281d3, #d3dfe6); /* Light blue gradient */
+  background: linear-gradient(to right, #2281d3, #4c7186); /* Light blue gradient */
 }
 
 main, footer {
   padding: 20px;
-  background: linear-gradient(to bottom, #478686, #d7e9f2); /* Light blue-green gradient */
+  background: linear-gradient(to bottom, #478686, #487a94); /* Light blue-green gradient */
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
 }

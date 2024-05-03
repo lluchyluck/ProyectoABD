@@ -19,6 +19,7 @@ class formulario_login extends formulario
         $htmlErroresGlobales = self::generaListaErroresGlobales($this->errores);
         $erroresCampos = self::generaErroresCampos(['nombreUsuario', 'password'], $this->errores, 'span', array('class' => 'error'));
 
+        //$rutaRegistro = RUTA_INCLUDES . "/src/register/register.php";
         // Se genera el HTML asociado a los campos del formulario y los mensajes de error.
         $html = <<<EOF
         $htmlErroresGlobales
@@ -38,6 +39,9 @@ class formulario_login extends formulario
             <br>
             <div>
                 <button type="submit" name="login">Entrar</button>
+            </div>
+            <div>
+            <p>¿No te has registrado todavía?, registrate aqui: <a href="/ProyectoABD/includes/src/register/register.php">Registro</a><p>
             </div>
         </fieldset>
         EOF;
