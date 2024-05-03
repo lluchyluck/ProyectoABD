@@ -1,10 +1,14 @@
 <?php
 
+namespace abd;
+
 
 class Aplicacion
 {
 
     private static $instancia;
+
+    private $db;
 
     public static function getInstance()
     {
@@ -14,12 +18,33 @@ class Aplicacion
         return self::$instancia;
     }
 
-    private function __construct()
+    public function getConexionBd()
     {
-        $this->inicializada = false;
-        $this->generandoError = false;
+        if ($this->isInitialized()) {
+            if (!isset($this->db)) {
+                $bdHost = "localhost";
+                $bdUser = "root";
+                $bdPass = "";
+                $bdName = "ProyectoABD";
+
+                $db = @mysqli_connect($bdHost, $bdUser, $bdPass, $bdName);
+                if ($db) {
+                    echo 'Conexión realizada correctamente.<br />';
+                    $this->db = $db;
+                }else{
+                    echo 'Conexión erronea a la base de datos';
+                }
+            }
+            return $this->db;
+        }
+    }
+    private function isInitialized()
+    {
+        if (isset($this->instancia)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
-	
-    
 }
