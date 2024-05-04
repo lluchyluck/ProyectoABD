@@ -21,6 +21,12 @@ class Usuario
         $this->password = $password;
         $this->img = $img;
     }
+
+    public function insertar($app){
+        $bd = $app->getConexionBd();
+        $sqlQuery = ;
+    }
+
     public function newUser($usuario){
 
     }
