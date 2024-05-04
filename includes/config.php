@@ -8,7 +8,7 @@ define('RUTA_VISTAS', BASE_URL . '/vistas'); // Ruta de la carpeta de plantillas
 define('RUTA_INCLUDES', BASE_URL . '/includes'); // Ruta de la carpeta de funciones y código reutilizable
 define('RUTA_MYSQL', BASE_URL . '/mysql'); // Ruta de la carpeta de consultas y configuraciones de MySQL
 define('RUTA_CSS','/ProyectoABD/assets/css/style.css'); // Ruta de la carpeta de consultas y configuraciones de MySQL
-
+define('RUTA_IMG', '/ProyectoABD/assets/img');
 
 
 // Comprobar si la sesión está iniciada

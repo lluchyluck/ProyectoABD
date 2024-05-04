@@ -2,6 +2,7 @@
 
 namespace abd;
 
+use abd\usuarios\Usuario;
 
 class Aplicacion
 {
@@ -31,7 +32,7 @@ class Aplicacion
                 if ($db) {
                     echo 'Conexión realizada correctamente.<br />';
                     $this->db = $db;
-                }else{
+                } else {
                     echo 'Conexión erronea a la base de datos';
                 }
             }
@@ -45,6 +46,48 @@ class Aplicacion
         } else {
             return false;
         }
+    }
+    public function objectToDataBase($objeto)
+    {
+        if (is_a($objeto, "Usuario")) {
+            $this->insertarUsuario($objeto);
+        } elseif (is_a($objeto, "Cancion")) {
+
+        } else {
+            echo "El objeto no pertenece a ninguna clase conocida";
+            return false;
+        }
+    }
+    private function insertarUsuario($usuario)
+    {
+        return $usuario->insertarBd($this->instancia);
+    }
+    public function getAllUsers()
+    {
+        $bd = $this->getConexionBd();
+        $sql = "SELECT DISTINCT id,username FROM usuarios";
+        $result = mysqli_query($bd, $sql);
+        if (mysqli_num_rows($result) > 0) {
+            $usernames = array(); 
+
+            while ($row = mysqli_fetch_assoc($result)) {
+                $usernames[$row['id']] = $row["username"];
+            }
+            mysqli_free_result($result); 
+            return $usernames; 
+        } else {
+            return null; 
+        }
+    }
+    public function existeUsuario($nombreUsuario){
+        $users = $this->getAllUsers();
+        foreach ($users as $userId => $userData) {
+            if ($userData['username'] === $nombreUsuario) {
+                
+                return $userId;
+            }
+        }
+        return null;
     }
 
 }
