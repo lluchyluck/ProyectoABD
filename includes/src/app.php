@@ -1,8 +1,7 @@
 <?php
 
-namespace abd;
-
-use abd\usuarios\Usuario;
+require_once __DIR__ . "/../config.php";
+include RUTA_INCLUDES . "/src/usuario.php";
 
 class Aplicacion
 {
@@ -60,30 +59,57 @@ class Aplicacion
     }
     private function insertarUsuario($usuario)
     {
-        return $usuario->insertarBd($this->instancia);
+        $bd = $this->getConexionBd();
+        $usuario->setId($this->nextId());
+        $sqlQuery = "INSERT INTO usuarios (id, username, password, img) VALUES ('$usuario->id', '$usuario->username', '$usuario->password', '$usuario->img')";
+        $result = mysqli_query($bd, $sqlQuery);
+        if ($result) {
+            echo "[+]Usuario añadido exitosamente";
+            mysqli_free_result($result);
+            return true;
+        } else {
+            echo "[-]No se pudo añadir al usuario, error de mysql";
+            mysqli_free_result($result);
+            return false;
+        }
+    }
+    private function nextId(){
+        $db = $this->getConexionBd();
+        $maxIDquery = "SELECT MAX(id) FROM usuarios"; 
+        $resultmaxIDquery = mysqli_query($db ,$maxIDquery);
+        $row = mysqli_fetch_row($resultmaxIDquery);
+        $maxId = $row[0];
+        mysqli_free_result($resultmaxIDquery);
+        return $maxId + 1;
     }
     public function getAllUsers()
     {
         $bd = $this->getConexionBd();
+ 
         $sql = "SELECT DISTINCT id,username FROM usuarios";
         $result = mysqli_query($bd, $sql);
         if (mysqli_num_rows($result) > 0) {
-            $usernames = array(); 
+            $usernames = array();
 
             while ($row = mysqli_fetch_assoc($result)) {
                 $usernames[$row['id']] = $row["username"];
             }
-            mysqli_free_result($result); 
-            return $usernames; 
+            mysqli_free_result($result);
+            return $usernames;
         } else {
-            return null; 
+            return null;
         }
     }
-    public function existeUsuario($nombreUsuario){
+    public function existeUsuario($nombreUsuario)
+    {
         $users = $this->getAllUsers();
+        
+        if (empty($users)) {
+            return false; // No users found, not an error
+        }
         foreach ($users as $userId => $userData) {
             if ($userData['username'] === $nombreUsuario) {
-                
+
                 return $userId;
             }
         }

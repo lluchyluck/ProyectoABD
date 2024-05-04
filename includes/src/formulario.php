@@ -1,5 +1,4 @@
 <?php
-
 abstract class formulario
 {
     protected $formId;
@@ -55,7 +54,7 @@ abstract class formulario
         
 
         $esValido = count($this->errores) === 0;
-       
+        
 
         if (! $esValido ) {
             return $this->generaFormulario($datos);
@@ -63,9 +62,11 @@ abstract class formulario
         
 
         if ($this->urlRedireccion !== null) {
+            
             header("Location: {$this->urlRedireccion}");
             exit();
         }
+        
     }
 
     protected function generaCamposFormulario(&$datos)

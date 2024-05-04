@@ -1,7 +1,9 @@
 <?php
 
+
 require_once __DIR__ . "/../../config.php";
 require RUTA_INCLUDES . "/src/register/formulario_register.php";
+
 
 
 $formRegister = new formulario_register();

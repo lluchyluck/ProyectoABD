@@ -1,10 +1,8 @@
 <?php
 
 require_once __DIR__ . "/../../config.php";
+require RUTA_INCLUDES . "/src/app.php";
 require RUTA_INCLUDES . "/src/formulario.php";
-
-use abd\Aplicacion;
-use abd\usuarios\Usuario;
 
 class formulario_register extends formulario
 {
@@ -82,20 +80,24 @@ class formulario_register extends formulario
 
         $foto = $datos['foto']['name'];
         $urlFoto = "/" . $foto;
-
+        
 
         if (count($this->errores) === 0) {
-
-            $newUser = new Usuario($nombreUsuario, $contraseña, $urlFoto);
+            
 
             $app = Aplicacion::getInstance();
+           
+
+            $newUser = new Usuario($nombreUsuario, $contraseña, $urlFoto);
+            
+            
 
             //comprobar que el usuario no esta ya en la base de datos para prevenir de duplicados
             if ($app->existeUsuario($nombreUsuario) == null) {
                 $this->errores[] = '<span style="color: red;">[-]Error al añadir un Usuario: usuario ya existente.</span>';
             } else {
                 
-
+                echo "hola";
 
 
                 if (!$app->objectToDataBase($newUser)) {
