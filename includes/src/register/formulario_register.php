@@ -12,7 +12,7 @@ class formulario_register extends formulario
     public function __construct()
     {
 
-        parent::__construct('formAddUser', ['urlRedireccion' => "index.php", 'enctype' => 'multipart/form-data']);
+        parent::__construct('formAddUser', ['urlRedireccion' => "/ProyectoABD/index.php", 'enctype' => 'multipart/form-data']);
     }
 
     protected function generaCamposFormulario(&$datos)
@@ -91,20 +91,21 @@ class formulario_register extends formulario
             $newUser = new Usuario($nombreUsuario, $contraseña, $urlFoto);
             
             
-
+            
             //comprobar que el usuario no esta ya en la base de datos para prevenir de duplicados
-            if ($app->existeUsuario($nombreUsuario) == null) {
+            if ($app->existeUsuario($nombreUsuario) != null) {
+                
                 $this->errores[] = '<span style="color: red;">[-]Error al añadir un Usuario: usuario ya existente.</span>';
             } else {
                 
-                echo "hola";
+                
 
 
                 if (!$app->objectToDataBase($newUser)) {
                     $this->errores[] = '<p style="color: red;">Error al añadir un Usuario.</p>';
                 } else {
 
-                    $_SESSION["mensaje"] = '<p style="color: green;">Usuario añadido con éxito.</p>';
+                    $_SESSION["mensaje"] = 'Usuario añadido con éxito.';
                     $_SESSION["accion"] = true;
 
                 }

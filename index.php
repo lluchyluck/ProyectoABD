@@ -30,3 +30,8 @@ $html = <<<EOS
 EOS;
 
 require RUTA_INCLUDES . "/plantilla.php";
+
+if(isset($_SESSION["mensaje"])){
+    echo "<script>alert('" . $_SESSION["mensaje"] . "');</script>";
+    $_SESSION["mensaje"] = null;
+}

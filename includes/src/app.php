@@ -20,23 +20,22 @@ class Aplicacion
 
     public function getConexionBd()
     {
-        if ($this->isInitialized()) {
-            if (!isset($this->db)) {
-                $bdHost = "localhost";
-                $bdUser = "root";
-                $bdPass = "";
-                $bdName = "ProyectoABD";
+        if (!isset($this->db)) {
+            $bdHost = "localhost";
+            $bdUser = "root";
+            $bdPass = "";
+            $bdName = "ProyectoABD";
 
-                $db = @mysqli_connect($bdHost, $bdUser, $bdPass, $bdName);
-                if ($db) {
-                    echo 'Conexión realizada correctamente.<br />';
-                    $this->db = $db;
-                } else {
-                    echo 'Conexión erronea a la base de datos';
-                }
+            $db = @mysqli_connect($bdHost, $bdUser, $bdPass, $bdName);
+            if ($db) {
+                echo 'Conexión realizada correctamente.<br />';
+                $this->db = $db;
+            } else {
+                echo 'Conexión erronea a la base de datos';
             }
-            return $this->db;
         }
+        return $this->db;
+    
     }
     private function isInitialized()
     {
@@ -49,7 +48,7 @@ class Aplicacion
     public function objectToDataBase($objeto)
     {
         if (is_a($objeto, "Usuario")) {
-            $this->insertarUsuario($objeto);
+            return $this->insertarUsuario($objeto);
         } elseif (is_a($objeto, "Cancion")) {
 
         } else {
@@ -60,16 +59,17 @@ class Aplicacion
     private function insertarUsuario($usuario)
     {
         $bd = $this->getConexionBd();
+        
         $usuario->setId($this->nextId());
-        $sqlQuery = "INSERT INTO usuarios (id, username, password, img) VALUES ('$usuario->id', '$usuario->username', '$usuario->password', '$usuario->img')";
+        
+        $sqlQuery = "INSERT INTO usuarios (id, username, password, img) VALUES (" . $usuario->getId() . ", '" . $usuario->getUsername(). "', '" .$usuario->getPassword() . "', '" . $usuario->getImg() . "')";
         $result = mysqli_query($bd, $sqlQuery);
+        
         if ($result) {
             echo "[+]Usuario añadido exitosamente";
-            mysqli_free_result($result);
             return true;
         } else {
             echo "[-]No se pudo añadir al usuario, error de mysql";
-            mysqli_free_result($result);
             return false;
         }
     }
@@ -85,9 +85,9 @@ class Aplicacion
     public function getAllUsers()
     {
         $bd = $this->getConexionBd();
- 
         $sql = "SELECT DISTINCT id,username FROM usuarios";
         $result = mysqli_query($bd, $sql);
+        
         if (mysqli_num_rows($result) > 0) {
             $usernames = array();
 
@@ -103,13 +103,13 @@ class Aplicacion
     public function existeUsuario($nombreUsuario)
     {
         $users = $this->getAllUsers();
-        
-        if (empty($users)) {
-            return false; // No users found, not an error
+
+        if (empty($users) || $users == null) {
+            return null; // No users found, not an error
         }
         foreach ($users as $userId => $userData) {
-            if ($userData['username'] === $nombreUsuario) {
-
+            
+            if ($userData === $nombreUsuario) {
                 return $userId;
             }
         }

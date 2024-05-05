@@ -2,12 +2,13 @@
 
 require_once __DIR__ . "/../../config.php";
 require RUTA_INCLUDES . "/src/formulario.php";
+require RUTA_INCLUDES . "/src/app.php";
 
 
 class formulario_login extends formulario
 {
     public function __construct() {
-        parent::__construct('formLogin', ['urlRedireccion' => '/index.php']);
+        parent::__construct('formLogin', ['urlRedireccion' => '/ProyectoABD/index.php']);
     }
     
     protected function generaCamposFormulario(&$datos)
@@ -64,7 +65,15 @@ class formulario_login extends formulario
         }
         
         if (count($this->errores) === 0) {
-            //PROCESAR EL FORMULARIO (CONECTAR BASE DE DATOS...)
+            $app = Aplicacion::getInstance();
+            if($id = $app->existeUsuario($nombreUsuario)){
+                $_SESSION["login"] = true;
+                $_SESSION["id"] = $id;
+                $_SESSION["username"] = $nombreUsuario;
+                $_SESSION["mensaje"] = "Usuario logeado con exito: $nombreUsuario";
+            }else{
+                $this->errores[] = '<p style="color: red;">El usuario o el password no coinciden.</p>';
+            }
         }
     }
 }
