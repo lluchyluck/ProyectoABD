@@ -66,11 +66,8 @@ class formulario_login extends formulario
         
         if (count($this->errores) === 0) {
             $app = Aplicacion::getInstance();
-            if($id = $app->existeUsuario($nombreUsuario)){
-                $_SESSION["login"] = true;
-                $_SESSION["id"] = $id;
-                $_SESSION["username"] = $nombreUsuario;
-                $_SESSION["mensaje"] = "Usuario logeado con exito: $nombreUsuario";
+            if($user = $app->existeUsuario($nombreUsuario)){         
+                $app->login($user);
             }else{
                 $this->errores[] = '<p style="color: red;">El usuario o el password no coinciden.</p>';
             }

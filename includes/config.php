@@ -14,4 +14,6 @@ define('RUTA_IMG', '/ProyectoABD/assets/img');
 // Comprobar si la sesión está iniciada
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
+    if(!isset($_SESSION["username"]))
+        $_SESSION["username"] = '(usuario no logueado: <a href="/ProyectoABD/includes/src/login/login.php">Login</a>)';
 }

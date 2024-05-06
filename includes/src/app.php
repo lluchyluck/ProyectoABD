@@ -35,7 +35,7 @@ class Aplicacion
             }
         }
         return $this->db;
-    
+
     }
     private function isInitialized()
     {
@@ -59,12 +59,12 @@ class Aplicacion
     private function insertarUsuario($usuario)
     {
         $bd = $this->getConexionBd();
-        
+
         $usuario->setId($this->nextId());
-        
-        $sqlQuery = "INSERT INTO usuarios (id, username, password, img) VALUES (" . $usuario->getId() . ", '" . $usuario->getUsername(). "', '" .$usuario->getPassword() . "', '" . $usuario->getImg() . "')";
+
+        $sqlQuery = "INSERT INTO usuarios (id, username, password, img) VALUES (" . $usuario->getId() . ", '" . $usuario->getUsername() . "', '" . $usuario->getPassword() . "', '" . $usuario->getImg() . "')";
         $result = mysqli_query($bd, $sqlQuery);
-        
+
         if ($result) {
             echo "[+]Usuario añadido exitosamente";
             return true;
@@ -73,10 +73,11 @@ class Aplicacion
             return false;
         }
     }
-    private function nextId(){
+    private function nextId()
+    {
         $db = $this->getConexionBd();
-        $maxIDquery = "SELECT MAX(id) FROM usuarios"; 
-        $resultmaxIDquery = mysqli_query($db ,$maxIDquery);
+        $maxIDquery = "SELECT MAX(id) FROM usuarios";
+        $resultmaxIDquery = mysqli_query($db, $maxIDquery);
         $row = mysqli_fetch_row($resultmaxIDquery);
         $maxId = $row[0];
         mysqli_free_result($resultmaxIDquery);
@@ -85,17 +86,17 @@ class Aplicacion
     public function getAllUsers()
     {
         $bd = $this->getConexionBd();
-        $sql = "SELECT DISTINCT id,username FROM usuarios";
+        $sql = "SELECT id, username, password, img FROM usuarios";
         $result = mysqli_query($bd, $sql);
-        
-        if (mysqli_num_rows($result) > 0) {
-            $usernames = array();
 
+        if (mysqli_num_rows($result) > 0) {
+            $users = array();
             while ($row = mysqli_fetch_assoc($result)) {
-                $usernames[$row['id']] = $row["username"];
+                echo "$row";
+                $users[] = $row; // Add complete user data to the array
             }
             mysqli_free_result($result);
-            return $usernames;
+            return $users;
         } else {
             return null;
         }
@@ -107,13 +108,31 @@ class Aplicacion
         if (empty($users) || $users == null) {
             return null; // No users found, not an error
         }
-        foreach ($users as $userId => $userData) {
-            
-            if ($userData === $nombreUsuario) {
-                return $userId;
+
+        foreach ($users as $user) {
+            if ($user['username'] === $nombreUsuario) {
+                return $user; // Return the complete user data
             }
         }
+
         return null;
     }
+    public function login($user)
+    {
+        $_SESSION["login"] = true;
+        $_SESSION["id"] = $user["id"];
+        $_SESSION["username"] = $user["username"];
+        $_SESSION["img"] = $user["img"];
+        $_SESSION["mensaje"] = "Usuario logeado con exito: " . $user["username"];
+    }
+    public function logout()
+    {
+        unset($_SESSION['login']);
+        unset($_SESSION['username']);
+        unset($_SESSION['id']);
+        unset($_SESSION['img']);
 
+        session_destroy();
+        session_start();
+    }
 }
