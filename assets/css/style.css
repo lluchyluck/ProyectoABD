@@ -2,14 +2,17 @@
 body {
   font-family: 'Arial', sans-serif;
   margin: 0;
-  background-color: #303d49; /* Light gray background */
-  color: #333; /* Dark gray text for readability */
+  background-color: #303d49;
+  /* Light gray background */
+  color: #333;
+  /* Dark gray text for readability */
 }
 
 /* Layout Styles */
 header {
   padding: 40px;
-  background-image: url("path/to/your/image.jpg"); /* Add a background image */
+  background-image: url("path/to/your/image.jpg");
+  /* Add a background image */
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -20,12 +23,15 @@ header {
 /* Alternatively, use a gradient background */
 header {
   /* Remove background-image properties above */
-  background: linear-gradient(to right, #2281d3, #4c7186); /* Light blue gradient */
+  background: linear-gradient(to right, #2281d3, #4c7186);
+  /* Light blue gradient */
 }
 
-main, footer {
+main,
+footer {
   padding: 20px;
-  background: linear-gradient(to bottom, #478686, #487a94); /* Light blue-green gradient */
+  background: linear-gradient(to bottom, #478686, #487a94);
+  /* Light blue-green gradient */
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
 }
@@ -37,14 +43,17 @@ main, footer {
 
 /* Typography */
 h1 {
-  color: #333; /* Dark gray text for contrast with background */
+  color: #333;
+  /* Dark gray text for contrast with background */
   font-size: 2.4em;
   margin-bottom: 15px;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* Subtle text shadow */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  /* Subtle text shadow */
 }
 
 h2 {
-  color: #333; /* Dark gray text */
+  color: #333;
+  /* Dark gray text */
   font-size: 1.6em;
   margin-bottom: 10px;
 }
@@ -65,20 +74,23 @@ nav li {
 
 nav a {
   text-decoration: none;
-  color: #333; /* Dark gray text */
+  color: #333;
+  /* Dark gray text */
   font-weight: bold;
   padding: 10px 18px;
   transition: background-color 0.3s ease;
 }
 
 nav a:hover {
-  background-color: rgba(0, 0, 0, 0.1); /* Subtle hover effect, slightly darker */
+  background-color: rgba(0, 0, 0, 0.1);
+  /* Subtle hover effect, slightly darker */
 }
 
 /* Forms */
 form {
   margin-bottom: 15px;
-  background-color: #e8ecec; /* Light gray background */
+  background-color: #e8ecec;
+  /* Light gray background */
   padding: 20px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
@@ -86,10 +98,12 @@ form {
 
 /* Other styles remain the same... */
 
-#sidebar-izquierda, #sidebar-derecha {
+#sidebar-izquierda,
+#sidebar-derecha {
   flex: 1;
   padding: 10px;
-  background-color: #a9d0f5; /* Light blue background */
+  background-color: #a9d0f5;
+  /* Light blue background */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -116,43 +130,121 @@ input[type="password"] {
 }
 
 button {
-  background-color: #388e3c; /* Green button */
+  background-color: #388e3c;
+  /* Green button */
   color: white;
   padding: 12px 20px;
   border: none;
   cursor: pointer
-  }
-  
-  button:hover {
-    background-color: #45a049;
-  }
-  
-  /* Footer Styles (add your styles here) */
-  
-  /* Latest News */
-  #sidebar-derecha ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  #sidebar-derecha li {
-    margin-bottom: 5px;
-  }
+}
 
-  .contenedor-sesion {
-    display: flex;
-    justify-content: flex-end;
-    width: 700px;
-    margin-right: 20px;
-  }
-  .contenedor-menu {
-    display: flex;
-    width: 1000px;
-    align-items: center;
-  }
-  .contenedor-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
+button:hover {
+  background-color: #45a049;
+}
+
+/* Footer Styles (add your styles here) */
+
+/* Latest News */
+#sidebar-derecha ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#sidebar-derecha li {
+  margin-bottom: 5px;
+}
+
+.contenedor-sesion {
+  display: flex;
+  justify-content: flex-end;
+  width: 700px;
+  margin-right: 20px;
+}
+
+.contenedor-menu {
+  display: flex;
+  width: 1000px;
+  align-items: center;
+}
+
+.contenedor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Estilos para el cuadrado contenedor */
+.contenedor-cuadrado {
+  width: 900px;
+  /* Ajustar el ancho según se desee */
+  height: 300px;
+  /* Ajustar la altura según se desee */
+  margin: 0 auto;
+  /* Centrar el cuadrado horizontalmente */
+  border: 1px solid #3b558d;
+  /* Borde gris claro */
+  background-color: #84d2d8;
+  /* Color de fondo blanco */
+  display: flex;
+  /* Habilitar flexbox para la distribución */
+ 
+  /* Permitir que los elementos se distribuyan en varias filas */
+}
+
+/* Estilos para los subcuadrados */
+.subcuadrado {
+  width: 50%;
+  /* Ancho del 50% para cada subcuadrado */
+  /* Altura del 50% para cada subcuadrado */
+  text-align: center;
+  /* Alinear el texto en el centro */
+  line-height: 300px;
+  /* Altura de línea igual a la altura del subcuadrado */
+  vertical-align: middle;
+  /* Alinear verticalmente el texto en el centro */
+  border: 1px solid #ddd;
+  /* Borde gris claro para cada subcuadrado */
+  cursor: pointer;
+  /* Cambiar el cursor a mano al pasar el mouse sobre el enlace */
+}
+
+/* Estilos para los enlaces */
+.subcuadrado a {
+  text-decoration: none;
+  /* Quitar la decoración de subrallado */
+  color: #000;
+  /* Color del texto negro */
+  font-size: 20px;
+  /* Tamaño de fuente personalizado */
+}
+
+/* Estilos para el subcuadrado activo (opcional) */
+.subcuadrado:hover {
+  background-color: #5fadb8;
+  /* Color de fondo gris claro al pasar el mouse */
+}
+table {
+  border-collapse: collapse; /* Combinar bordes de celdas adyacentes */
+  width: 100%; /* Ajustar ancho de la tabla al contenedor */
+  margin: 20px auto; /* Agregar margen alrededor de la tabla */
+}
+
+th, td {
+  border: 1px solid #ddd; /* Agregar borde a celdas */
+  padding: 8px; /* Agregar espacio de relleno a las celdas */
+  text-align: left; /* Alineación de texto a la izquierda */
+}
+
+th {
+  background-color: #2f737c; /* Color de fondo para encabezados */
+  font-weight: bold; /* Texto en negrita para encabezados */
+}
+
+tr:nth-child(odd) {
+  background-color: #4ab4c2; /* Color de fondo alterno para filas pares */
+}
+
+tr:nth-child(even) {
+  background-color: #56d2e2; /* Color de fondo alterno para filas impares */
+}

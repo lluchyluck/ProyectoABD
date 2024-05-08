@@ -28,7 +28,6 @@ class Aplicacion
 
             $db = @mysqli_connect($bdHost, $bdUser, $bdPass, $bdName);
             if ($db) {
-                echo 'Conexión realizada correctamente.<br />';
                 $this->db = $db;
             } else {
                 echo 'Conexión erronea a la base de datos';
@@ -101,6 +100,24 @@ class Aplicacion
             return null;
         }
     }
+    public function getAllSongs(){
+        $bd = $this->getConexionBd();
+        $sql = "SELECT name,genero,artista,duracion FROM canciones";
+        $result = mysqli_query($bd, $sql);
+        
+        if (mysqli_num_rows($result) > 0) {
+            $canciones = array();
+            while ($row = mysqli_fetch_assoc($result)) {
+                echo "$row";
+                $canciones[] = $row; // Add complete user data to the array
+            }
+            
+            mysqli_free_result($result);
+            return $canciones;
+        } else {
+            return null;
+        }
+    }
     public function existeUsuario($nombreUsuario)
     {
         $users = $this->getAllUsers();
@@ -131,8 +148,8 @@ class Aplicacion
         unset($_SESSION['username']);
         unset($_SESSION['id']);
         unset($_SESSION['img']);
-
         session_destroy();
         session_start();
+        $_SESSION["mensaje"] = "Sesion cerrada!!!";
     }
 }

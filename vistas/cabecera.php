@@ -3,7 +3,14 @@
         <nav>
             <ul>
                 <li><a href="/ProyectoABD/index.php">Inicio</a></li>
-                <li><a href="#">Bases de datos</a></li>
+                <li><a href="<?php
+                session_start();
+                if($_SESSION["login"]){
+                    echo "/ProyectoABD/includes/src/basesDatos/basesDatos.php";
+                }else{
+                    echo "#";
+                }
+                ?>">Bases de datos</a></li>
                 <li><a href="/ProyectoABD/includes/src/perfil/perfil.php">Perfil</a></li>
             </ul>
         </nav>
@@ -18,30 +25,8 @@
             }
             ?>
 
-            <button id="cerrarSesion" onclick="goToPHP()">Cerrar Sesión</button>
+            <button id="cerrarSesion" onclick="location.href='/ProyectoABD/includes/src/logout/logout.php';">Cerrar Sesión</button>
 
         </nav>
     </div>
 </div>
-<script>
-        const myButton = document.getElementById('cerrarSesion');
-        const url = '/ProyectoABD/includes/src/logout/logout.php'; 
-
-        myButton.addEventListener('click', function() {
-            const xhr = new XMLHttpRequest();
-
-            xhr.open('POST', url);
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
-            const formData = new FormData();
-            xhr.onload = function() {
-                if (xhr.status === 200) {
-                    console.log('POST request successful:', xhr.responseText);
-                } else {
-                    console.error('Error sending POST request:', xhr.statusText);
-                }
-            };
-
-            xhr.send(formData);
-        });
-    </script>
