@@ -118,6 +118,20 @@ class Aplicacion
             return null;
         }
     }
+    public function getSong($nombre, $genero){
+        $bd = $this->getConexionBd();
+        $sql = "SELECT name,genero FROM canciones WHERE name = " . $nombre . " AND genero = " . $genero . "";
+        $result = mysqli_query($bd, $sql);
+        
+        if (mysqli_num_rows($result) > 0) {
+            $cancion = mysqli_fetch_assoc($result); // Add complete user data to the array
+            mysqli_free_result($result);
+            return $cancion;
+        } else {
+            return null;
+        }
+
+    }
     public function existeUsuario($nombreUsuario)
     {
         $users = $this->getAllUsers();
