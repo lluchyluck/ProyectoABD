@@ -4,7 +4,7 @@
             <ul>
                 <li><a href="/ProyectoABD/index.php">Inicio</a></li>
                 <li><a href="<?php
-                session_start();
+                 require_once __DIR__ . "/../includes/config.php";
                 if ($_SESSION["login"]) {
                     echo "/ProyectoABD/includes/src/basesDatos/basesDatos.php";
                 } else {

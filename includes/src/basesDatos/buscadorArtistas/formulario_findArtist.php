@@ -52,7 +52,7 @@ class formulario_findArtist extends formulario
         if (count($this->errores) === 0) {
             $app = Aplicacion::getInstance();
             $canciones = $app->getArtist($nombre);
-
+            $html = "";
             if ($canciones == null) {
                 $html .= "<h2>No hemos encontrado tu artista, por favor intentelo de nuevo!!!</h2>";
             } else {

@@ -16,4 +16,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
     if(!isset($_SESSION["username"]))
         $_SESSION["username"] = '(usuario no logueado: <a href="/ProyectoABD/includes/src/login/login.php">Login</a>)';
+    if(!isset($_SESSION["login"]))
+        $_SESSION["login"] = false;
+    
 }

@@ -15,6 +15,8 @@ class formulario_findSong extends formulario
     {
         $app = Aplicacion::getInstance();
         $generos = $app->getAllGenders();
+        if($generos == null)
+            return "No hay suficiente informacion en la base de datos";
         foreach ($generos as $genero) {
             $html .= "<option value=" . $genero . ">" . $genero . "</option>";
         }

@@ -142,6 +142,8 @@ class Aplicacion
     {
         $bd = $this->getConexionBd();
         $generos = $this->getAllGenders();
+        if ($generos == null)
+            return null;
         $generosCount = array();
         foreach ($generos as $genero) {
             $sql = "SELECT COUNT(id) FROM canciones WHERE genero = '" . $genero . "'";
@@ -161,7 +163,8 @@ class Aplicacion
     {
         $generosCount = $this->getGenericInfo();
         $generos = $this->getAllGenders();
-
+        if ($generos == null)
+            return "No hay suficiente info en la base de datos.";
         $html = "";
         $html .= "<table>";
         $html .= "<tr><th><h3>Géneros</h3></th></tr>";
