@@ -1,7 +1,8 @@
 <?php
 
 require_once __DIR__ . "/../config.php";
-include RUTA_INCLUDES . "/src/usuario.php";
+require RUTA_INCLUDES . "/src/usuario.php";
+require RUTA_INCLUDES . "/src/perfil/cancionesFavoritas/cancionFavorita.php";
 
 class Aplicacion
 {
@@ -48,8 +49,8 @@ class Aplicacion
     {
         if (is_a($objeto, "Usuario")) {
             return $this->insertarUsuario($objeto);
-        } elseif (is_a($objeto, "Cancion")) {
-
+        } elseif (is_a($objeto, "CancionFavorita")) {
+            return $this->insertarCancionFavorita($objeto);
         } else {
             echo "El objeto no pertenece a ninguna clase conocida";
             return false;
@@ -82,6 +83,22 @@ class Aplicacion
         mysqli_free_result($resultmaxIDquery);
         return $maxId + 1;
     }
+    private function insertarCancionFavorita($cancionFavorita)
+    {
+        $bd = $this->getConexionBd();
+
+
+        $sqlQuery = "INSERT INTO cancionesFavoritas (user_id, song_id, stars) VALUES (" . $cancionFavorita->getUserId() . ", '" . $cancionFavorita->getSongId() . "', '" . $cancionFavorita->getStars() . "')";
+        $result = mysqli_query($bd, $sqlQuery);
+
+        if ($result) {
+            echo "[+]CancionesFavoritas añadido exitosamente";
+            return true;
+        } else {
+            echo "[-]No se pudo añadir CancionesFavoritas, error de mysql";
+            return false;
+        }
+    }
     public function getAllUsers()
     {
         $bd = $this->getConexionBd();
@@ -103,7 +120,7 @@ class Aplicacion
     public function getAllSongs()
     {
         $bd = $this->getConexionBd();
-        $sql = "SELECT name,genero,artista,duracion FROM canciones";
+        $sql = "SELECT  id,name,genero,artista,duracion FROM canciones";
         $result = mysqli_query($bd, $sql);
 
         if (mysqli_num_rows($result) > 0) {
@@ -191,14 +208,14 @@ class Aplicacion
     public function getSong($nombre, $genero)
     {
         $bd = $this->getConexionBd();
-        if($nombre == "1" && $genero == "1"){
+        if ($nombre == "1" && $genero == "1") {
             return $this->getAllSongs();
-        }else if($nombre == "1"){
-            $sql = "SELECT name,genero,artista,duracion FROM canciones WHERE genero = '" . $genero . "'";
-        }else if($genero == "1"){
-            $sql = "SELECT name,genero,artista,duracion FROM canciones WHERE name = '" . $nombre . "'";
-        }else{
-            $sql = "SELECT name,genero,artista,duracion FROM canciones WHERE name = '" . $nombre . "' AND genero = '" . $genero . "'";
+        } else if ($nombre == "1") {
+            $sql = "SELECT id,name,genero,artista,duracion FROM canciones WHERE genero = '" . $genero . "'";
+        } else if ($genero == "1") {
+            $sql = "SELECT  id,name,genero,artista,duracion FROM canciones WHERE name = '" . $nombre . "'";
+        } else {
+            $sql = "SELECT  id,name,genero,artista,duracion FROM canciones WHERE name = '" . $nombre . "' AND genero = '" . $genero . "'";
         }
 
         $result = mysqli_query($bd, $sql);
@@ -209,7 +226,7 @@ class Aplicacion
                 $canciones[] = $row; // Add complete user data to the array
 
             }
-            
+
             mysqli_free_result($result);
             return $canciones;
         } else {
@@ -217,11 +234,12 @@ class Aplicacion
         }
 
     }
-    public function getArtist($nombre){
+    public function getArtist($nombre)
+    {
         $bd = $this->getConexionBd();
-    
+
         $sql = "SELECT name,genero,duracion FROM canciones WHERE artista = '" . $nombre . "'";
-        
+
         $result = mysqli_query($bd, $sql);
 
         if (mysqli_num_rows($result) > 0) {
@@ -230,39 +248,40 @@ class Aplicacion
                 $canciones[] = $row; // Add complete user data to the array
 
             }
-            
+
             mysqli_free_result($result);
             return $canciones;
         } else {
             return null;
         }
     }
-    public function getFavouriteSong($song){
+    public function getFavouriteSong($songId)
+    {
         $bd = $this->getConexionBd();
         if (!isset($_SESSION["id"]))
-            return null; 
+            return null;
         $idUsuario = $_SESSION["id"];
-        $sql = "SELECT c.name FROM canciones c JOIN cancionesFavoritas f ON f.song_id = c.id WHERE f.user_id = " . $idUsuario;
-        
+        $sql = "SELECT c.id FROM canciones c JOIN cancionesFavoritas f ON f.song_id = c.id WHERE f.user_id = " . $idUsuario . " AND f.song_id = '" . $songId ."';";
+
         $result = mysqli_query($bd, $sql);
 
         if (mysqli_num_rows($result) > 0) {
-           
-            $canciones = $row; // Add complete user data to the array
-            print_r($row);
+            $row = mysqli_fetch_assoc($result);
+            $canciones = $row["id"]; // Add complete user data to the array
             mysqli_free_result($result);
             return $canciones;
         } else {
             return null;
         }
     }
-    public function getAllFavouriteSongs(){
+    public function getAllFavouriteSongs()
+    {
         $bd = $this->getConexionBd();
         if (!isset($_SESSION["id"]))
-            return null; 
+            return null;
         $idUsuario = $_SESSION["id"];
-        $sql = "SELECT c.name,c.artista,c.genero,c.duracion FROM canciones c JOIN cancionesFavoritas f ON f.song_id = c.id WHERE f.user_id = " . $idUsuario;
-        
+        $sql = "SELECT c.id,c.name,c.artista,c.genero,c.duracion,f.stars FROM canciones c JOIN cancionesFavoritas f ON f.song_id = c.id WHERE f.user_id = " . $idUsuario;
+
         $result = mysqli_query($bd, $sql);
 
         if (mysqli_num_rows($result) > 0) {
@@ -271,12 +290,24 @@ class Aplicacion
                 $canciones[] = $row; // Add complete user data to the array
 
             }
-            
+
             mysqli_free_result($result);
             return $canciones;
         } else {
             return null;
         }
+    }
+    public function removeFavSong($idCancion, $idUsuario)
+    {
+        $bd = $this->getConexionBd();
+        if (!isset($_SESSION["id"]))
+            return false;
+        $idUsuario = $_SESSION["id"];
+        $sql = "DELETE FROM cancionesFavoritas WHERE user_id = '" . $idUsuario . "' AND song_id = '" . $idCancion . "';";
+        echo $sql;
+        mysqli_query($bd, $sql);
+
+        return true;
     }
     public function existeUsuario($nombreUsuario)
     {

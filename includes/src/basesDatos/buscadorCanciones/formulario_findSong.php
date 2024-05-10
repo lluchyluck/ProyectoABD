@@ -97,10 +97,12 @@ class formulario_findSong extends formulario
                     $html .= "<td>" . $cancion['genero'] . "</td>";
                     $html .= "<td>" . $cancion['artista'] . "</td>";
                     $html .= "<td>" . $cancion['duracion'] . "</td>";
-                    if($app->getFavouriteSong($cancion['name']) != null)
-                        $html .= "<td>&#10004;</td>";
-                    else
-                        $html .= "<td>&#9524;;</td>";
+                    $result = $app->getFavouriteSong($cancion['id']);
+                    if($result != null){
+                        $html .= "<td>&#10003;</td>"; //tic
+                    }else
+                        $html .= "<td>&#10007;<form style='background: none; border: none; padding: none; margin: none; box-shadow: none; border-radius: none;' id='unique-form' action='/ProyectoABD/includes/src/perfil/cancionesFavoritas/añadirCancionFav.php' method='post'><input type='hidden' name='songId' value =" . $cancion['id']. "><label style='display: inline;'>Stars:</label><input type='number' id='stars' name='stars' value='0' min='0' max='5'><button type='submit'>Añadir</button>
+                      </form></td>"; //no tic
                     $html .= "</tr>";
                 }
                 $html .= "</table>";
