@@ -205,6 +205,24 @@ class Aplicacion
         }
         return $html;
     }
+    public function getEstadisticas(){
+        $bd = $this->getConexionBd();
+        $sql = "SELECT c.name, c.artista, c.genero, c.duracion, AVG(cf.stars) AS estrellas_promedio FROM canciones c JOIN cancionesFavoritas cf ON c.id = cf.song_id GROUP BY c.id ORDER BY estrellas_promedio DESC LIMIT 5;";
+        $result = mysqli_query($bd, $sql);
+
+        if (mysqli_num_rows($result) > 0) {
+            $esta = array();
+            while ($row = mysqli_fetch_assoc($result)) {
+                $esta[] = $row; // Add complete user data to the array
+
+            }
+
+            mysqli_free_result($result);
+            return $esta;
+        } else {
+            return null;
+        }
+    }
     public function getSong($nombre, $genero)
     {
         $bd = $this->getConexionBd();

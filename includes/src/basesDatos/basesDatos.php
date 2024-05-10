@@ -21,6 +21,11 @@ $html = <<<EOS
             <a href="/ProyectoABD/includes/src/basesDatos/infoExtra/infoExtra.php">Informacion extra</a>
         </div>
     </div>
+    <div class="contenedor-cuadrado">
+        <div class="subcuadrado">
+            <a href="/ProyectoABD/includes/src/basesDatos/estadisticas/estadisticas.php">Estadisticas</a>
+        </div>
+    </div>
 </article>
 EOS;
 
