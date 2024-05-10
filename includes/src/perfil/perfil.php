@@ -16,10 +16,13 @@ $html = <<<EOS
     <fieldset>
         <legend>$htmlNombreUsuario</legend>
         <div>
-        <img src="/ProyectoABD/assets/img/$imgSrc" alt="Texto alternativo para la imagen" width="150" height="150">
+        <img src="/ProyectoABD/assets/img/$imgSrc" alt="No se ha encontrado imagen!!!" width="150" height="150">
         </div>
         <div>
         <label>ID: $idUser<label>
+        </div>
+        <div>
+        <h3 style="display: inline;"><a href="/ProyectoABD/includes/src/perfil/cancionesFavoritas/cancionesFavoritas.php">Canciones Favoritas</a></h3>
         </div>
     </fieldset>
 

@@ -234,6 +234,26 @@ class Aplicacion
             return null;
         }
     }
+    public function getAllFavouriteSongs(){
+        $bd = $this->getConexionBd();
+        $idUsuario = $_SESSION["id"];
+        $sql = "SELECT c.name,c.artista,c.genero,c.duracion FROM canciones c JOIN cancionesFavoritas f ON f.song_id = c.id";
+        
+        $result = mysqli_query($bd, $sql);
+
+        if (mysqli_num_rows($result) > 0) {
+            $canciones = array();
+            while ($row = mysqli_fetch_assoc($result)) {
+                $canciones[] = $row; // Add complete user data to the array
+
+            }
+            
+            mysqli_free_result($result);
+            return $canciones;
+        } else {
+            return null;
+        }
+    }
     public function existeUsuario($nombreUsuario)
     {
         $users = $this->getAllUsers();

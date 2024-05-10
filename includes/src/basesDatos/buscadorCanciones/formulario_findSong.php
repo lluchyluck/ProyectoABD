@@ -2,7 +2,7 @@
 
 require_once __DIR__ . "/../../../config.php";
 require RUTA_INCLUDES . "/src/formulario.php";
-require RUTA_INCLUDES . "/src/app.php";
+require_once RUTA_INCLUDES . "/src/app.php";
 
 
 class formulario_findSong extends formulario
