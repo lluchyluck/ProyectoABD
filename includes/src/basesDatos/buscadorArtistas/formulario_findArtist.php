@@ -5,11 +5,12 @@ require RUTA_INCLUDES . "/src/formulario.php";
 require RUTA_INCLUDES . "/src/app.php";
 
 
-class formulario_findSong extends formulario
+class formulario_findArtist extends formulario
 {
     public function __construct() {
-        parent::__construct('formFindSong');
+        parent::__construct('formFindARtist', ['urlRedireccion' => '/ProyectoABD/index.php']);
     }
+    
     private function htmlGeneros(){
         $html .= "<select id='genero' name='genero'>";
         $app = Aplicacion::getInstance();
@@ -24,7 +25,7 @@ class formulario_findSong extends formulario
     {
         // Se generan los mensajes de error si existen.
         $htmlErroresGlobales = self::generaListaErroresGlobales($this->errores);
-        $erroresCampos = self::generaErroresCampos(['buscarCancion', 'genero'], $this->errores, 'span', array('class' => 'error'));
+        $erroresCampos = self::generaErroresCampos(['buscarArtista', 'genero'], $this->errores, 'span', array('class' => 'error'));
 
         //$rutaRegistro = RUTA_INCLUDES . "/src/register/register.php";
         // Se genera el HTML asociado a los campos del formulario y los mensajes de error.
@@ -32,15 +33,16 @@ class formulario_findSong extends formulario
         $html = <<<EOF
         $htmlErroresGlobales
         <fieldset>
-            <legend>Buscador de canciones:</legend>
+            <legend>Buscador de Artistas:</legend>
             <div>
-                <label for="buscarCancio">Nombre:</label>
-                <input id="buscarCancion" type="text" name="buscarCancion"/>
-                {$erroresCampos['buscarCancion']}
+                <label for="buscarArti">Nombre:</label>
+                <input id="buscarArtista" type="text" name="buscarArtista"/>
+                {$erroresCampos['buscarArtista']}
             </div>
             <br>
             <div>
                 <label for="Gener">Genero:</label>
+                
                 $htmlSelect
                 {$erroresCampos['genero']}
             </div>
@@ -53,6 +55,7 @@ class formulario_findSong extends formulario
         EOF;
         return $html;
     }
+    
 
     protected function procesaFormulario(&$datos)
     {
@@ -68,8 +71,7 @@ class formulario_findSong extends formulario
         
         if (count($this->errores) === 0) {
             $app = Aplicacion::getInstance();
-            $cancion = $app->getSong($nombre,$genero);
-            
+            $cancion = $app->getArtist($nombre,$genero);
         }
     }
 }

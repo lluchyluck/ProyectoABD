@@ -91,7 +91,7 @@ class Aplicacion
         if (mysqli_num_rows($result) > 0) {
             $users = array();
             while ($row = mysqli_fetch_assoc($result)) {
-                echo "$row";
+                
                 $users[] = $row; // Add complete user data to the array
             }
             mysqli_free_result($result);
@@ -108,7 +108,7 @@ class Aplicacion
         if (mysqli_num_rows($result) > 0) {
             $canciones = array();
             while ($row = mysqli_fetch_assoc($result)) {
-                echo "$row";
+                
                 $canciones[] = $row; // Add complete user data to the array
             }
             
@@ -118,9 +118,64 @@ class Aplicacion
             return null;
         }
     }
+    public function getAllGenders(){
+        $bd = $this->getConexionBd();
+        $sql = "SELECT genero FROM generos";
+        $result = mysqli_query($bd, $sql);
+        
+        if (mysqli_num_rows($result) > 0) {
+            $generos = array();
+            while ($row = mysqli_fetch_assoc($result)) {
+                $generos[] = $row["genero"]; // Add complete user data to the array
+                
+            }
+            
+            mysqli_free_result($result);
+            return $generos;
+        } else {
+            return null;
+        }
+    }
+    private function getGenericInfo(){
+        $bd = $this->getConexionBd();
+        $generos = $this->getAllGenders();
+        $generosCount = array();
+        foreach ($generos as $genero){
+            $sql = "SELECT COUNT(id) FROM canciones WHERE genero = '" . $genero . "'";
+            $result = mysqli_query($bd, $sql);
+            
+            if (mysqli_num_rows($result) > 0) {  
+                $row = mysqli_fetch_assoc($result);
+                $generosCount[$genero] = $row["COUNT(id)"];
+                
+                mysqli_free_result($result);
+                
+            } 
+        }
+        return $generosCount;
+    }
+    public function displayGenericInfo(){
+        $generosCount = $this->getGenericInfo();
+        $generos = $this->getAllGenders();
+        $html = "";
+        $html .="<table>";
+        $html .= "<tr><th><label>Total canciones</label></th></tr>";
+        foreach ($generos as $genero){
+            $html .= "<tr><td><p><b>". $genero . "</b>: ". $generosCount[$genero]."</p></td></tr>";
+        }
+        $html .="</table>";
+        $usuarios = $this->getAllUsers();
+        $html .= "----------------------------------------------------------------";
+        $html .= "<label>Numero de usuarios:". count($usuarios) . "</label>";
+        $html .= "----------------------------------------------------------------";
+        if($_SESSION['login']){
+            $html .= "<p>Usuario loggeado como: <b>". $_SESSION['username'] . "</b>,con id:<b>". $_SESSION['id'] ."</b></p>";
+        }
+        return $html;
+    }
     public function getSong($nombre, $genero){
         $bd = $this->getConexionBd();
-        $sql = "SELECT name,genero FROM canciones WHERE name = " . $nombre . " AND genero = " . $genero . "";
+        $sql = "SELECT name,genero FROM canciones WHERE name = '" . $nombre . "' AND genero = '" . $genero . "'";
         $result = mysqli_query($bd, $sql);
         
         if (mysqli_num_rows($result) > 0) {

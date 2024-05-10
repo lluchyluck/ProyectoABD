@@ -1,8 +1,9 @@
 <aside id="sidebar-derecha">
-    <h2>Últimas novedades</h2>
-    <ul>
-        <li>Canción 1</li>
-        <li>Álbum 2</li>
-        <li>Canción 3</li>
-    </ul>
+    <h2>Info Biblioteca</h2>
+    <?php 
+    require_once __DIR__ . "/../includes/config.php"; 
+    require RUTA_INCLUDES . "/src/app.php";
+    $app = Aplicacion::getInstance();
+    echo $app->displayGenericInfo();
+    ?>
 </aside>
