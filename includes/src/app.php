@@ -237,10 +237,31 @@ class Aplicacion
             return null;
         }
     }
+    public function getFavouriteSong($song){
+        $bd = $this->getConexionBd();
+        if (!isset($_SESSION["id"]))
+            return null; 
+        $idUsuario = $_SESSION["id"];
+        $sql = "SELECT c.name FROM canciones c JOIN cancionesFavoritas f ON f.song_id = c.id WHERE f.user_id = " . $idUsuario;
+        
+        $result = mysqli_query($bd, $sql);
+
+        if (mysqli_num_rows($result) > 0) {
+           
+            $canciones = $row; // Add complete user data to the array
+            print_r($row);
+            mysqli_free_result($result);
+            return $canciones;
+        } else {
+            return null;
+        }
+    }
     public function getAllFavouriteSongs(){
         $bd = $this->getConexionBd();
+        if (!isset($_SESSION["id"]))
+            return null; 
         $idUsuario = $_SESSION["id"];
-        $sql = "SELECT c.name,c.artista,c.genero,c.duracion FROM canciones c JOIN cancionesFavoritas f ON f.song_id = c.id";
+        $sql = "SELECT c.name,c.artista,c.genero,c.duracion FROM canciones c JOIN cancionesFavoritas f ON f.song_id = c.id WHERE f.user_id = " . $idUsuario;
         
         $result = mysqli_query($bd, $sql);
 

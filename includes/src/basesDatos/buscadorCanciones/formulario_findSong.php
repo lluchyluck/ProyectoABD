@@ -90,13 +90,17 @@ class formulario_findSong extends formulario
                 }
                 $html .= "<h3>Canciones encontradas con su busqueda:</h3>";
                 $html .= "<table>";
-                $html .= "<tr><th>Nombre</th><th>Género</th><th>Artista</th><th>Duración</th></tr>";
+                $html .= "<tr><th>Nombre</th><th>Género</th><th>Artista</th><th>Duración</th><th>Favorita</th></tr>";
                 foreach ($canciones as $cancion) {
                     $html .= "<tr>";
                     $html .= "<td>" . $cancion['name'] . "</td>";
                     $html .= "<td>" . $cancion['genero'] . "</td>";
                     $html .= "<td>" . $cancion['artista'] . "</td>";
                     $html .= "<td>" . $cancion['duracion'] . "</td>";
+                    if($app->getFavouriteSong($cancion['name']) != null)
+                        $html .= "<td>&#10004;</td>";
+                    else
+                        $html .= "<td>&#9524;;</td>";
                     $html .= "</tr>";
                 }
                 $html .= "</table>";
