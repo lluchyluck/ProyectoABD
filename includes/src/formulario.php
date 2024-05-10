@@ -50,7 +50,7 @@ abstract class formulario
             return $this->generaFormulario();
         }
         
-        $this->procesaFormulario($datos);
+        $html = $this->procesaFormulario($datos);
         
 
         $esValido = count($this->errores) === 0;
@@ -66,7 +66,7 @@ abstract class formulario
             header("Location: {$this->urlRedireccion}");
             exit();
         }
-        
+        return $html;
     }
 
     protected function generaCamposFormulario(&$datos)

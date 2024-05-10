@@ -5,7 +5,7 @@ require_once "includes/config.php";
 
 $html = <<<EOS
 <article>
-    <h1>Bienvenido a la SongRepository</h1>
+    <h1>Bienvenido a SongRepository</h1>
     <p>
             En el mundo acelerado de hoy, la música se ha convertido en una compañera indispensable, una fuente de consuelo, inspiración y pura alegría. Seas un aficionado a la música experimentado o un oyente casual, tener acceso a una biblioteca musical vasta y diversa es un recurso invaluable. En SongRepository, nos apasiona brindarte una experiencia musical incomparable, que se adapte a todos los gustos y preferencias.
         </p>
