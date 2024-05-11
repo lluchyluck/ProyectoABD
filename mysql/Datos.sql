@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 10-05-2024 a las 19:31:36
+-- Tiempo de generación: 11-05-2024 a las 15:50:26
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -65,7 +65,9 @@ INSERT INTO `canciones` (`id`, `name`, `genero`, `artista`, `duracion`) VALUES
 (37, 'Despacito', 'Reggaeton', 'Luis Fonsi feat. Daddy Yankee', '300'),
 (38, 'Mayores', 'Reggaeton', 'Becky G feat. Bad Bunny', '270'),
 (39, 'Dura', 'Reggaeton', 'Daddy Yankee', '240'),
-(40, 'Mi Gente', 'Reggaeton', 'J Balvin feat. Willy William', '270');
+(40, 'Mi Gente', 'Reggaeton', 'J Balvin feat. Willy William', '270'),
+(41, 'Mi primo dijo primo', 'Pop', 'Delgao', '420'),
+(42, 'Vois sur ton chemin', 'Techno', 'BENNET', '510');
 
 --
 -- Volcado de datos para la tabla `cancionesFavoritas`
@@ -74,25 +76,48 @@ INSERT INTO `canciones` (`id`, `name`, `genero`, `artista`, `duracion`) VALUES
 INSERT INTO `cancionesFavoritas` (`user_id`, `song_id`, `stars`) VALUES
 (7, 1, 5),
 (7, 10, 2),
-(1, 22, 4),
-(1, 1, 3),
-(1, 6, 3),
-(1, 3, 3),
-(1, 5, 2),
-(8, 26, 3),
-(8, 3, 2),
-(8, 1, 3),
-(8, 38, 3),
-(8, 4, 1),
-(8, 7, 0),
-(8, 15, 0),
 (7, 11, 4),
-(1, 2, 2),
+(9, 36, 4),
+(9, 19, 3),
+(9, 2, 5),
+(9, 12, 3),
+(9, 28, 1),
 (9, 1, 5),
-(9, 21, 3),
-(9, 2, 2),
-(9, 4, 1),
-(9, 3, 1);
+(9, 3, 3),
+(9, 5, 1),
+(9, 4, 3),
+(8, 1, 5),
+(8, 2, 4),
+(8, 3, 2),
+(8, 4, 3),
+(8, 6, 4),
+(8, 40, 3),
+(8, 41, 5),
+(5, 1, 4),
+(5, 2, 4),
+(5, 3, 3),
+(5, 4, 1),
+(5, 6, 4),
+(5, 42, 5),
+(5, 9, 5),
+(7, 2, 4),
+(7, 42, 5),
+(7, 9, 3),
+(10, 1, 5),
+(10, 42, 4),
+(10, 9, 5),
+(10, 2, 2),
+(10, 3, 4),
+(10, 4, 2),
+(10, 5, 4),
+(10, 6, 3),
+(10, 41, 4),
+(11, 1, 5),
+(11, 41, 5),
+(11, 2, 3),
+(11, 3, 2),
+(11, 5, 3),
+(11, 32, 3);
 
 --
 -- Volcado de datos para la tabla `generos`
@@ -113,15 +138,12 @@ INSERT INTO `generos` (`genero`) VALUES
 --
 
 INSERT INTO `usuarios` (`id`, `username`, `password`, `img`) VALUES
-(1, 'lucaselgrande', 'pene123', '/'),
-(2, 'pepitogrillo123', 'pepe32', '/'),
-(3, 'juan123', 'holaa', '/mota.jpeg'),
-(4, 'sadf', 'asdf', '/'),
 (5, 'juanita', '123456', '/mortadelaaaa.jpg'),
-(6, 'aaaa', 'aaaa', '/'),
 (7, 'lucasbueno', 'password', '/mota.jpeg'),
-(8, 'manolo3', 'manolin', '/mortadelaaaa.jpg'),
-(9, 'admin', 'admin', '/');
+(8, 'admin', 'admin', '/images3.jpeg'),
+(9, 'maria2', '1235', '/Sin título.jpeg'),
+(10, 'albertito86', 'elpuma123', '/Sin título5.jpeg'),
+(11, 'antonio16', 'antolin321', '/Sin título34.jpeg');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

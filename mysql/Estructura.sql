@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 05-05-2024 a las 10:26:40
+-- Tiempo de generación: 11-05-2024 a las 15:49:44
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -29,9 +29,9 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `canciones` (
   `id` int(10) NOT NULL,
-  `name` varchar(30) NOT NULL,
+  `name` varchar(100) NOT NULL,
   `genero` varchar(30) NOT NULL,
-  `artista` varchar(30) NOT NULL,
+  `artista` varchar(70) NOT NULL,
   `duracion` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -71,17 +71,6 @@ CREATE TABLE `usuarios` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `usuarios`
---
-
-INSERT INTO `usuarios` (`id`, `username`, `password`, `img`) VALUES
-(1, 'lucaselgrande', 'pene123', '/'),
-(2, 'pepitogrillo123', 'pepe32', '/'),
-(3, 'juan123', 'holaa', '/mota.jpeg'),
-(4, 'sadf', 'asdf', '/'),
-(5, 'juanita', '123456', '/mortadelaaaa.jpg');
-
---
 -- Índices para tablas volcadas
 --
 
@@ -119,14 +108,14 @@ ALTER TABLE `usuarios`
 -- Filtros para la tabla `canciones`
 --
 ALTER TABLE `canciones`
-  ADD CONSTRAINT `canciones_ibfk_1` FOREIGN KEY (`genero`) REFERENCES `generos` (`genero`) ON DELETE CASCADE ON UPDATE NO ACTION;
+  ADD CONSTRAINT `canciones_ibfk_1` FOREIGN KEY (`genero`) REFERENCES `generos` (`genero`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `cancionesFavoritas`
 --
 ALTER TABLE `cancionesFavoritas`
-  ADD CONSTRAINT `cancionesFavoritas_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  ADD CONSTRAINT `cancionesFavoritas_ibfk_2` FOREIGN KEY (`song_id`) REFERENCES `canciones` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+  ADD CONSTRAINT `cancionesFavoritas_ibfk_1` FOREIGN KEY (`song_id`) REFERENCES `canciones` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `cancionesFavoritas_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
