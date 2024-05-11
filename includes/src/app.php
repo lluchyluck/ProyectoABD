@@ -1,7 +1,8 @@
 <?php
 
 require_once __DIR__ . "/../config.php";
-require RUTA_INCLUDES . "/src/usuario.php";
+require_once RUTA_INCLUDES . "/src/usuario.php";
+require_once RUTA_INCLUDES . "/src/cancion.php";
 require RUTA_INCLUDES . "/src/perfil/cancionesFavoritas/cancionFavorita.php";
 
 class Aplicacion
@@ -51,8 +52,30 @@ class Aplicacion
             return $this->insertarUsuario($objeto);
         } elseif (is_a($objeto, "CancionFavorita")) {
             return $this->insertarCancionFavorita($objeto);
+        }elseif (is_a($objeto, "Cancion")) {
+            
+            return $this->insertarCancion($objeto);
         } else {
             echo "El objeto no pertenece a ninguna clase conocida";
+            return false;
+        }
+    }
+    private function insertarCancion($cancion)
+    {
+        $bd = $this->getConexionBd();
+
+        $cancion->setId($this->nextIdSong());
+        echo "hola";
+        $sqlQuery = "INSERT INTO canciones (id, name, genero, artista,duracion) VALUES (" . $cancion->getId() . ", '" . $cancion->getName() . "', '" . $cancion->getGenero() . "', '" . $cancion->getArtista() . "', '" . $cancion->getDuracion() . "')";
+        
+        echo $sqlQuery;
+        $result = mysqli_query($bd, $sqlQuery);
+        
+        if ($result) {
+            echo "[+]Cancion añadida exitosamente";
+            return true;
+        } else {
+            echo "[-]No se pudo añadir la cancion, error de mysql";
             return false;
         }
     }
@@ -60,7 +83,7 @@ class Aplicacion
     {
         $bd = $this->getConexionBd();
 
-        $usuario->setId($this->nextId());
+        $usuario->setId($this->nextIdUsuario());
 
         $sqlQuery = "INSERT INTO usuarios (id, username, password, img) VALUES (" . $usuario->getId() . ", '" . $usuario->getUsername() . "', '" . $usuario->getPassword() . "', '" . $usuario->getImg() . "')";
         $result = mysqli_query($bd, $sqlQuery);
@@ -73,7 +96,17 @@ class Aplicacion
             return false;
         }
     }
-    private function nextId()
+    private function nextIdSong()
+    {
+        $db = $this->getConexionBd();
+        $maxIDquery = "SELECT MAX(id) FROM canciones";
+        $resultmaxIDquery = mysqli_query($db, $maxIDquery);
+        $row = mysqli_fetch_row($resultmaxIDquery);
+        $maxId = $row[0];
+        mysqli_free_result($resultmaxIDquery);
+        return $maxId + 1;
+    }
+    private function nextIdUsuario()
     {
         $db = $this->getConexionBd();
         $maxIDquery = "SELECT MAX(id) FROM usuarios";
@@ -338,6 +371,22 @@ class Aplicacion
         foreach ($users as $user) {
             if ($user['username'] === $nombreUsuario) {
                 return $user; // Return the complete user data
+            }
+        }
+
+        return null;
+    }
+    public function existeCancion($nombreCancion)
+    {
+        $songs = $this->getAllSongs();
+
+        if (empty($users) || $users == null) {
+            return null; // No users found, not an error
+        }
+
+        foreach ($songs as $song) {
+            if ($song['name'] === $nombreCancion) {
+                return $song; // Return the complete user data
             }
         }
 

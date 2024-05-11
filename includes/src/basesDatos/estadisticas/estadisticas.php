@@ -28,7 +28,7 @@ function verInfo($app)
             $html .="<td>" . $cancion['artista'] . "</td>";
             $html .="<td>" . $cancion['genero'] . "</td>";
             $html .="<td>" . $cancion['duracion'] . "</td>";
-            $html .="<td>" . number_format($cancion['estrellas_promedio'], 1, '.', '') . "</td>"; // Format to one decimal place
+            $html .="<td>" . number_format($cancion['estrellas_promedio'], 2, '.', '') . "</td>"; // Format to one decimal place
             $html.= "</tr>";
         }
         $html .= "</table>";
