@@ -20,7 +20,7 @@ function verInfo($app)
     $html ="";
     $html .= "<h3>Listado de las 5 canciones mas populares y su nota promedio:</h3>";
     $html .= "<table>";
-    $html .= "<tr><th>Nombre</th><th>Género</th><th>Artista</th><th>Duración</th><th>Favorita</th></tr>";
+    $html .= "<tr><th>Nombre</th><th>Artista</th><th>Género</th><th>Duración</th><th>Favorita</th></tr>";
     if (isset($esta) && !empty($esta)) {
         foreach ($esta as $cancion) {
             $html .= "<tr>";
