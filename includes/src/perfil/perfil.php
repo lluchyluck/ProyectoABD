@@ -6,8 +6,13 @@ require_once __DIR__ . "/../../config.php";
 
 
 $htmlNombreUsuario = '<h2 style="display: inline;">' . $_SESSION["username"] . '</h2>';
-$imgSrc = $_SESSION["img"];
-$idUser = $_SESSION["id"];
+if(isset($_SESSION["img"]) && isset($_SESSION["id"])){
+    $imgSrc = $_SESSION["img"];
+    $idUser = $_SESSION["id"];
+}else{
+    $imgSrc ="/";
+    $idUser = "Base de datos vacia!!!";
+}
 $tituloPagina = 'Perfil';
 
 $html = <<<EOS
